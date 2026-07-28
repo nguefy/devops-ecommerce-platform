@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "VComo1wByaT9DCAlrDRP16Yup3UAtsNOUW1g9o02Kw5X6mAxVykuzPrvsbXAGyuif6czm5eg5dbMB8rrWwv46w==",
+  "success": true,
+  "projectFilePath": "/home/brice/projects/devops-ecommerce-platform/src/backend/DevOpsECommerce.Api/DevOpsECommerce.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/brice/.nuget/packages/microsoft.aspnetcore.openapi/8.0.29/microsoft.aspnetcore.openapi.8.0.29.nupkg.sha512",
+    "/home/brice/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/brice/.nuget/packages/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg.sha512",
+    "/home/brice/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
+    "/home/brice/.nuget/packages/swashbuckle.aspnetcore.swagger/6.6.2/swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
+    "/home/brice/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.6.2/swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
+    "/home/brice/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.6.2/swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+  ],
+  "logs": []
+}
