@@ -1,13 +1,12 @@
+using DevOpsECommerce.Api.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +15,31 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+var products = new List<Product>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new()
+    {
+        Id = 1,
+        Name = "Mechanical Keyboard",
+        Description = "RGB Mechanical Keyboard",
+        Price = 89.99m,
+        Stock = 15
+    },
+    new()
+    {
+        Id = 2,
+        Name = "Gaming Mouse",
+        Description = "Wireless Gaming Mouse",
+        Price = 49.99m,
+        Stock = 30
+    }
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/api/products", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return Results.Ok(products);
 })
-.WithName("GetWeatherForecast")
+.WithName("GetProducts")
 .WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
