@@ -1,11 +1,32 @@
 using DevOpsECommerce.Api.Models;
+using DevOpsECommerce.Api.Services;
+using Microsoft.EntityFrameworkCore;
+using DevOpsECommerce.Api.Data;
+using DevOpsECommerce.Api.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("Postgres")
+    ));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
+
+    DatabaseSeeder.Seed(dbContext);
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -15,31 +36,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var products = new List<Product>
-{
-    new()
-    {
-        Id = 1,
-        Name = "Mechanical Keyboard",
-        Description = "RGB Mechanical Keyboard",
-        Price = 89.99m,
-        Stock = 15
-    },
-    new()
-    {
-        Id = 2,
-        Name = "Gaming Mouse",
-        Description = "Wireless Gaming Mouse",
-        Price = 49.99m,
-        Stock = 30
-    }
-};
-
-app.MapGet("/api/products", () =>
-{
-    return Results.Ok(products);
-})
-.WithName("GetProducts")
-.WithOpenApi();
+app.MapControllers();
 
 app.Run();
