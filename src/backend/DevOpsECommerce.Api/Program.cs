@@ -6,6 +6,19 @@ using DevOpsECommerce.Api.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("frontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -19,6 +32,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("frontend");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -37,5 +52,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "Healthy"
+}));
 
 app.Run();

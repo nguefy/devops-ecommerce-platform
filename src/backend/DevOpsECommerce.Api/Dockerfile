@@ -5,13 +5,17 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
 
-COPY . .
+# Copier uniquement le projet
+COPY DevOpsECommerce.Api.csproj ./
 
+# Restaurer les dépendances
 RUN dotnet restore
 
-RUN dotnet publish \
-    -c Release \
-    -o /app/publish
+# Copier ensuite le reste du code
+COPY . .
+
+# Compiler et publier
+RUN dotnet publish -c Release -o /app/publish --no-restore
 
 # ===========================
 # Étape d'exécution

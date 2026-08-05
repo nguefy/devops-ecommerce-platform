@@ -6,6 +6,8 @@ services:
 
     restart: unless-stopped
 
+
+
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -16,6 +18,14 @@ services:
 
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
 
 
 
@@ -34,7 +44,24 @@ services:
       ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
 
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+  
+
+
+  frontend:
+    build:
+      context: ./src/frontend
+
+    container_name: ecommerce-frontend
+
+    restart: unless-stopped
+
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - api
 
 
 
