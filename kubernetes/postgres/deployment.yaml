@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: postgres
+  namespace: devops-ecommerce
 
 spec:
   replicas: 1

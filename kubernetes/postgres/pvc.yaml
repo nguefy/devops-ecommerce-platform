@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 
 metadata:
   name: postgres-pvc
+  namespace: devops-ecommerce
 
 spec:
   accessModes:
@@ -10,4 +11,4 @@ spec:
 
   resources:
     requests:
-      storage: 5Gi
+      storage: 2Gi
