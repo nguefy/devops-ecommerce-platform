@@ -43,4 +43,7 @@ spec:
 
           env:
             - name: ConnectionStrings__Postgres
-              value: "Host=postgres;Port=5432;Database=ecommerce;Username=postgres;Password=postgres"
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: ConnectionStrings__Postgres
