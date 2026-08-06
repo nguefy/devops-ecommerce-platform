@@ -40,6 +40,15 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider
         .GetRequiredService<ApplicationDbContext>();
 
+    var availableMigrations = dbContext.Database.GetMigrations();
+
+    foreach (var migration in availableMigrations)
+    {
+        Console.WriteLine($"AVAILABLE MIGRATION: {migration}");
+    }
+
+    dbContext.Database.Migrate();
+
     DatabaseSeeder.Seed(dbContext);
 }
 
