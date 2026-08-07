@@ -1,0 +1,28 @@
+name: Helm CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  helm-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'latest'
+
+      - name: Helm lint
+        run: helm lint helm/ecommerce
+
+      - name: Helm template
+        run: helm template ecommerce helm/ecommerce
