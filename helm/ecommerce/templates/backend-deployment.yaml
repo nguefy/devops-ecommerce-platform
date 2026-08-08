@@ -29,6 +29,15 @@ spec:
           ports:
             - containerPort: {{ .Values.backend.service.targetPort }}
 
+
+          securityContext:
+            runAsNonRoot: {{ .Values.backend.securityContext.runAsNonRoot }}
+            allowPrivilegeEscalation: {{ .Values.backend.securityContext.allowPrivilegeEscalation }}
+            capabilities:
+              drop:
+                - ALL
+
+
           resources:
             requests:
               cpu: {{ .Values.backend.resources.requests.cpu }}

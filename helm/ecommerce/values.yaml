@@ -6,6 +6,13 @@ backend:
     tag: latest
     pullPolicy: Always
 
+  securityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
   service:
     type: NodePort
     port: 8080
