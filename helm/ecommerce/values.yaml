@@ -13,6 +13,9 @@ backend:
       drop:
         - ALL
 
+    seccompProfile:
+      type: RuntimeDefault
+
   service:
     type: NodePort
     port: 8080
@@ -67,6 +70,9 @@ frontend:
     capabilities:
       drop:
         - ALL
+
+    seccompProfile:
+      type: RuntimeDefault
 
   service:
     type: NodePort

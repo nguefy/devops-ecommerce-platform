@@ -36,6 +36,9 @@ spec:
             capabilities:
               drop:
                 - ALL
+            seccompProfile:
+              type: {{ .Values.backend.securityContext.seccompProfile.type }}
+
 
 
           resources:

@@ -36,6 +36,9 @@ spec:
                 - ALL
 
 
+            seccompProfile:
+              type: {{ .Values.frontend.securityContext.seccompProfile.type }}
+
           resources:
             requests:
               cpu: {{ .Values.frontend.resources.requests.cpu }}
