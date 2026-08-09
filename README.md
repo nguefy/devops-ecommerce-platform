@@ -217,12 +217,37 @@ Helm manages the Kubernetes resources and provides configurable values for:
 * Resource requests and limits
 * PostgreSQL storage
 * Health probes
+* Container security contexts
 
 The backend includes:
 
 * Readiness probe
 * Liveness probe
 * `/health` endpoint
+
+## Kubernetes Security Hardening
+
+The Kubernetes application workloads are hardened using container-level security contexts managed through Helm.
+
+Backend and Frontend are configured with:
+
+* `runAsNonRoot: true`
+* `allowPrivilegeEscalation: false`
+* All Linux capabilities dropped
+* `seccompProfile: RuntimeDefault`
+
+The security configuration is defined in `helm/ecommerce/values.yaml` and applied through the corresponding Deployment templates.
+
+PostgreSQL keeps its native container security configuration to preserve correct initialization and persistent-volume permissions.
+
+The security hardening was validated with:
+
+```bash
+helm lint helm/ecommerce
+kubectl get pods -n devops-ecommerce
+```
+
+The final deployment was verified with all application workloads running successfully.
 
 ## Observability
 
@@ -248,7 +273,7 @@ Ansible is used for configuration management and automation.
 
 ## Validation Status
 
-The CI/CD implementation has been validated successfully.
+The CI/CD and Kubernetes implementation has been validated successfully.
 
 | Component                     | Status     |
 | ----------------------------- | ---------- |
@@ -263,6 +288,10 @@ The CI/CD implementation has been validated successfully.
 | Helm template                 | ✅ Passed   |
 | Helm references GHCR images   | ✅ Verified |
 | Helm CD workflow              | ✅ Passed   |
+| Kubernetes deployment         | ✅ Passed   |
+| Backend security hardening    | ✅ Verified |
+| Frontend security hardening   | ✅ Verified |
+| PostgreSQL deployment         | ✅ Running  |
 
 ## GHCR Image Validation
 
@@ -295,6 +324,7 @@ The project currently demonstrates:
 * Docker image build and publishing
 * GHCR container registry
 * Helm configuration validation
+* Kubernetes security hardening for application workloads
 * Prometheus/Grafana observability
 * Loki centralized logging
 * Infrastructure as Code foundations
@@ -307,7 +337,7 @@ Potential next improvements include:
 * Using Git SHA or immutable image digests instead of `latest`
 * Adding automated integration tests
 * Adding security scanning for Docker images
-* Adding Kubernetes security policies
+* Expanding Kubernetes security policies
 * Deploying the infrastructure to Azure
 * Adding production-grade secrets management
 * Improving observability dashboards and alerts
