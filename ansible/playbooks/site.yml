@@ -1,0 +1,9 @@
+---
+- name: Validate Ansible configuration
+  hosts: local
+  gather_facts: true
+
+  tasks:
+    - name: Display target hostname
+      ansible.builtin.debug:
+        msg: "Ansible is running on {{ ansible_hostname }}"
