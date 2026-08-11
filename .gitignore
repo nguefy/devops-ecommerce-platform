@@ -430,3 +430,5 @@ FodyWeavers.xsd
 
 # Terraform
 terraform/.terraform/
+terraform/*.tfvars
+terraform/*.tfstate*
