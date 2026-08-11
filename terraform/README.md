@@ -231,6 +231,17 @@ Terraform state can contain sensitive infrastructure information and must be pro
 
 For production usage, a remote Terraform backend with appropriate access controls and state protection should be configured.
 
+## Terraform State
+
+The current configuration uses the default local Terraform state during development and validation.
+
+Terraform state files are excluded from Git to prevent infrastructure state from being committed to the repository.
+
+For collaborative or production deployments, the state should be migrated to a remote Azure Storage backend with appropriate access controls, encryption, and state locking.
+
+The remote backend will be configured once an Azure subscription and the required Storage Account infrastructure are available.
+
+
 ## Validation Workflow
 
 Recommended workflow before committing Terraform changes:
