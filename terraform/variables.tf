@@ -39,3 +39,21 @@ variable "aks_node_count" {
   type        = number
   default     = 2
 }
+
+variable "aks_pod_cidr" {
+  description = "CIDR range used for AKS pods."
+  type        = string
+  default     = "10.244.0.0/16"
+}
+
+variable "aks_service_cidr" {
+  description = "CIDR range used for Kubernetes services."
+  type        = string
+  default     = "10.0.2.0/24"
+}
+
+variable "aks_dns_service_ip" {
+  description = "Kubernetes DNS service IP address."
+  type        = string
+  default     = "10.0.2.10"
+}

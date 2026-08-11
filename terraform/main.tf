@@ -43,9 +43,9 @@ resource "azurerm_kubernetes_cluster" "main" {
   network_profile {
     network_plugin      = "azure"
     network_plugin_mode = "overlay"
-    pod_cidr            = "10.244.0.0/16"
-    service_cidr        = "10.0.2.0/24"
-    dns_service_ip      = "10.0.2.10"
+    pod_cidr            = var.aks_pod_cidr
+    service_cidr        = var.aks_service_cidr
+    dns_service_ip      = var.aks_dns_service_ip
   }
 
   oidc_issuer_enabled       = true
