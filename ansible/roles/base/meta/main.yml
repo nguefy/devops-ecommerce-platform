@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: DevOps E-Commerce Platform
+  description: Base system validation and configuration role
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - "noble"
+
+dependencies: []
