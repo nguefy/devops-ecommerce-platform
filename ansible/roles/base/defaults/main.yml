@@ -1,2 +1,3 @@
 ---
 base_expected_os_family: "Debian"
+base_expected_distribution: "Ubuntu"
