@@ -1,0 +1,29 @@
+---
+- name: Load required Kubernetes kernel modules
+  become: true
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ kubernetes_prerequisites_kernel_modules }}"
+
+- name: Persist required Kubernetes kernel modules
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/kubernetes.conf
+    content: |
+      {% for module in kubernetes_prerequisites_kernel_modules %}
+      {{ module }}
+      {% endfor %}
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Configure Kubernetes kernel parameters
+  become: true
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  loop: "{{ kubernetes_prerequisites_sysctl | dict2items }}"

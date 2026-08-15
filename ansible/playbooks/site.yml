@@ -1,7 +1,8 @@
 ---
-- name: Validate Ansible configuration
+- name: Configure Ansible managed host
   hosts: local
   gather_facts: true
 
   roles:
     - base
+    - kubernetes_prerequisites
