@@ -7,3 +7,5 @@ base_required_packages:
   - curl
   - git
   - unzip
+
+base_timezone: "Europe/Berlin"

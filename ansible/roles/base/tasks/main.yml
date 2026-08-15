@@ -19,3 +19,8 @@
     name: "{{ base_required_packages }}"
     state: present
     update_cache: true
+
+- name: Configure system timezone
+  become: true
+  community.general.timezone:
+    name: "{{ base_timezone }}"
