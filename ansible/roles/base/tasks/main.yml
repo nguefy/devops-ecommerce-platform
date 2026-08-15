@@ -12,3 +12,10 @@
       - ansible_distribution == base_expected_distribution
     fail_msg: "Unsupported operating system distribution: {{ ansible_distribution }}"
     success_msg: "Operating system distribution is {{ ansible_distribution }}"
+
+- name: Install required base packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ base_required_packages }}"
+    state: present
+    update_cache: true

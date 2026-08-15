@@ -1,3 +1,9 @@
 ---
 base_expected_os_family: "Debian"
 base_expected_distribution: "Ubuntu"
+
+base_required_packages:
+  - ca-certificates
+  - curl
+  - git
+  - unzip
