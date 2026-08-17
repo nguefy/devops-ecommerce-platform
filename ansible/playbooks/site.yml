@@ -6,3 +6,4 @@
   roles:
     - base
     - kubernetes_prerequisites
+    - container_runtime

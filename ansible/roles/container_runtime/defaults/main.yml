@@ -1,0 +1,6 @@
+---
+container_runtime_package: "containerd"
+
+container_runtime_service: "containerd"
+
+container_runtime_config_path: "/etc/containerd/config.toml"

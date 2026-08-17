@@ -1,0 +1,6 @@
+---
+- name: Restart container runtime
+  become: true
+  ansible.builtin.systemd:
+    name: "{{ container_runtime_service }}"
+    state: restarted

@@ -1,0 +1,45 @@
+---
+- name: Install container runtime
+  become: true
+  ansible.builtin.apt:
+    name: "{{ container_runtime_package }}"
+    state: present
+    update_cache: true
+
+- name: Create container runtime configuration directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ container_runtime_config_path | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Generate container runtime configuration
+  become: true
+  ansible.builtin.command:
+    cmd: "containerd config default"
+  register: container_runtime_default_config
+  changed_when: false
+  check_mode: false
+
+- name: Configure container runtime
+  become: true
+  ansible.builtin.copy:
+    dest: "{{ container_runtime_config_path }}"
+    content: >-
+      {{
+        container_runtime_default_config.stdout
+        | regex_replace('SystemdCgroup = false', 'SystemdCgroup = true')
+      }}
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart container runtime
+
+- name: Enable and start container runtime
+  become: true
+  ansible.builtin.systemd:
+    name: "{{ container_runtime_service }}"
+    enabled: true
+    state: started
